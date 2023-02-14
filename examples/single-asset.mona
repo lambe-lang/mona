@@ -27,5 +27,6 @@ function withdraw(amount : tez) {
 
     ledger[sender] -= amount
 
+    -- Append a new transfer to the current operations
     operations += transfer sender amount
 }
