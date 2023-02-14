@@ -1,7 +1,7 @@
 contract {
     storage is ledger
     operations is operations
-    entries are deposit, transfer, withdraw
+    entries are deposit, transfer and withdraw
 }
 
 let ledger: map address nat = [*:0] -- Default value is zero
