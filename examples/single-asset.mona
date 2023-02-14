@@ -5,7 +5,7 @@ contract {
 }
 
 let ledger: map address nat = [*:0] -- Default value is zero
-let operations: list operation = []
+let operations: operations = []
 
 function deposit(currency: currency, amount: tez) {
     ledger[sender] += amount
