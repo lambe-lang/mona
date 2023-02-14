@@ -13,7 +13,7 @@ function deposit(currency: currency, amount: tez) {
 
 function transfer(who: address, amount: tez) {
     require {
-        ledger[who] >= amount -- Insufficient transferred amount
+        ledger[sender] >= amount -- Insufficient transferred amount
     }
 
     ledger[sender] -= amount
@@ -22,7 +22,7 @@ function transfer(who: address, amount: tez) {
 
 function withdraw(amount : tez) {
     require {
-        ledger[who] >= amount -- Insufficient transferred amount
+        ledger[sender] >= amount -- Insufficient transferred amount
     }
 
     ledger[sender] -= amount
