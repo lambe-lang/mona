@@ -1,0 +1,18 @@
+contract {
+    storage is value
+    entries are increment, decrement and reset
+}
+
+let value : int = 0
+
+function increment(i : int) : int {
+    value += i
+}
+
+function decrement(i : int) {
+    value -= i
+}
+
+function reset() {
+    value = 0
+}

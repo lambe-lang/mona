@@ -1,0 +1,31 @@
+contract {
+    storage is ledger
+    operations is operations
+    entries are deposit, transfer, withdraw
+}
+
+let ledger: map address nat = [*:0] -- Default value is zero
+let operations: list operation = []
+
+function deposit(currency: currency, amount: tez) {
+    ledger[sender] += amount
+}
+
+function transfer(who: address, amount: tez) {
+    require {
+        ledger[who] >= amount -- Insufficient transferred amount
+    }
+
+    ledger[sender] -= amount
+    ledger[who] += amount
+}
+
+function withdraw(amount : tez) {
+    require {
+        ledger[who] >= amount -- Insufficient transferred amount
+    }
+
+    ledger[sender] -= amount
+
+    operations += transfer sender amount
+}
