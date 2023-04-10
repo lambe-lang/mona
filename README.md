@@ -19,7 +19,7 @@ toplevel_expression ::=
 
 ```    
 function_expression ::=
-    'function' '(' parameters? ')' bloc_expression
+    'function' '(' parameters? ')' '->' type_expression bloc_expression
 
 expression ::=
     function_expression
