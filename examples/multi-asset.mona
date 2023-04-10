@@ -1,0 +1,35 @@
+contract {
+    entries deposit, transfer, withdraw
+    storage: ledger = [*:[*:0]] -- 0 should be the neutral currency value
+}
+
+type ledger = map nat (map address currency)
+
+invariant {
+    -- Impossible to have the equality since origination can accept some currency for the balance
+    storage[*][*] <= Contract.balance
+}
+
+fun deposit(token:nat) {
+    storage[token][Transaction.sender] += Transaction.amount
+}
+
+fun transfer(token:nat, destination:address, amount:currency) {
+    requires {
+        Transaction.amount == 0
+        storage[token][Transaction.sender] >= amount || Too much transferred currency
+    }
+
+    storage[token][Transaction.sender] -= amount
+    storage[token][destination] += amount
+}
+
+fun withdraw(token:nat, amount:currency) {
+    requires {
+        Transaction.amount == 0
+        storage[token][Transaction.sender] >= amount || Too much transferred currency
+    }
+
+    storage[token][Transaction.sender] -= amount
+    transfer amount to Transaction.sender
+}

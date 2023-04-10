@@ -1,5 +1,7 @@
 # Mona programming language
 
+Mona is a Smart-Contract centric language.  
+
 ## Syntax definition
 
 ### Toplevel expressions
@@ -52,8 +54,6 @@ binary_expression ::=
     
 escape_expression ::=
     'return' expression
-    'break'
-    'continue'  
     
 record_expression ::=
     '{' record_fields? '}'
@@ -116,7 +116,7 @@ TODO
 
 MIT License
 
-Copyright (c) 2023 Lambë Language
+Copyright (c) 2023 Mona Language
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

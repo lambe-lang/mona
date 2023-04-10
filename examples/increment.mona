@@ -1,18 +1,20 @@
 contract {
-    storage is value
-    entries are increment, decrement and reset
+    entries increment, decrement, reset
+    storage: nat = 0
 }
 
-let value : int = 0
-
-function increment(i : int) : int {
-    value += i
+fun increment(i:nat) {
+    storage += i
 }
 
-function decrement(i : int) {
-    value -= i
+fun decrement(i:nat) {
+    requires {
+        storage >= i || Cannot decrement more than expected
+    }
+
+    storage -= i
 }
 
-function reset() {
-    value = 0
+fun reset() {
+    storage = 0
 }

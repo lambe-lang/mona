@@ -1,31 +1,33 @@
 contract {
-    storage is ledger
-    operations is operations
-    entries are deposit, transfer, withdraw
+    entries deposit, transfer, withdraw
+    storage: ledger = [*:0] -- 0 should be the neutral currency value
 }
 
-let ledger: map address nat = [*:0] -- Default value is zero
-let operations: list operation = []
+type ledger = map address currency
 
-function deposit(currency: currency, amount: tez) {
-    ledger[sender] += amount
+invariant {
+    -- Impossible to have the equality since origination can accept some currency for the balance
+    storage[*] <= Contract.balance
 }
 
-function transfer(who: address, amount: tez) {
-    require {
-        ledger[who] >= amount -- Insufficient transferred amount
+fun deposit() {
+    storage[Transaction.sender] += Transaction.amount
+}
+
+fun transfer(destination: address, amount: currency) {
+    requires {
+        storage[Transaction.sender] >= amount -- Too much transferred currency
     }
 
-    ledger[sender] -= amount
-    ledger[who] += amount
+    storage[Transaction.sender] -= amount
+    storage[destination] += amount
 }
 
-function withdraw(amount : tez) {
-    require {
-        ledger[who] >= amount -- Insufficient transferred amount
+fun withdraw(amount : currency) {
+    requires {
+        storage[Transaction.sender] >= amount -- Too much transferred currency
     }
 
-    ledger[sender] -= amount
-
-    operations += transfer sender amount
+    storage[Transaction.sender] -= amount
+    transfer amount to Transaction.sender
 }
