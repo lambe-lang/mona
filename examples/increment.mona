@@ -9,7 +9,7 @@ fun increment(i:nat) {
 
 fun decrement(i:nat) {
     requires {
-        storage >= i || Cannot decrement more than expected
+        storage >= i -- Cannot decrement more than expected
     }
 
     storage -= i

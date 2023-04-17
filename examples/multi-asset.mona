@@ -16,8 +16,7 @@ fun deposit(token:nat) {
 
 fun transfer(token:nat, destination:address, amount:currency) {
     requires {
-        Transaction.amount == 0
-        storage[token][Transaction.sender] >= amount || Too much transferred currency
+        storage[token][Transaction.sender] >= amount -- Too much transferred currency
     }
 
     storage[token][Transaction.sender] -= amount
@@ -26,8 +25,7 @@ fun transfer(token:nat, destination:address, amount:currency) {
 
 fun withdraw(token:nat, amount:currency) {
     requires {
-        Transaction.amount == 0
-        storage[token][Transaction.sender] >= amount || Too much transferred currency
+        storage[token][Transaction.sender] >= amount -- Too much transferred currency
     }
 
     storage[token][Transaction.sender] -= amount
