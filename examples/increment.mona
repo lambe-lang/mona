@@ -1,5 +1,5 @@
 contract {
-    entries increment, decrement, reset
+    entries: increment, decrement, reset
     storage: nat = 0
 }
 

@@ -1,9 +1,9 @@
 contract {
-    entries deposit, transfer, withdraw
+    entries: deposit, transfer, withdraw
     storage: ledger = [*:0] -- 0 should be the neutral currency value
 }
 
-type ledger = map address currency
+type ledger = [address:currency]
 
 invariant {
     -- Impossible to have the equality since origination can accept some currency for the balance
