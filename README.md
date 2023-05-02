@@ -19,11 +19,10 @@ toplevel_expression ::=
 
 ```    
 function_expression ::=
-    'function' '(' parameters? ')' '->' type_expression bloc_expression
+    'fun' '(' parameters? ')' ('->' type_expression)? bloc_expression
 
 expression ::=
     function_expression
-    lambda_expression
     bloc_expression
     declaration_expression
     if_exression
@@ -33,10 +32,7 @@ expression ::=
     record_expression
 
 bloc_expression ::= 
-    '{' (expression ';')* '}'
-    
-lambda_expression ::=
-    '(' parameters? ')' => expression
+    '{' (expression)* '}'
     
 declaration_expression ::=
     'const' IDENT (':' type)? '=' expression

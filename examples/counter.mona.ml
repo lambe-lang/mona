@@ -1,9 +1,20 @@
-contract {
-    entries increment, decrement, reset
-    storage: nat = 0
-}
+type entries = nat | nat | unit
+type storage = nat
 
-sig increment : nat * nat -> operation list * nat
+sig main : entries * storage -> operation list * storage
+let main = fun arguments ->
+    -- Retrieve parameters + implicit ones
+    let entry = fst arguments in
+    let storage = snd arguments in
+    let operations = [] in
+    -- Decomposition
+    case (entry)
+        fun p -> increment (p, storage)
+        fun p -> case p
+                    fun p -> decrement (p,storage)
+                    fun p -> reset (p,storage)
+
+sig increment : nat * storage -> operation list * storage
 val increment  = fun arguments ->
     -- Retrieve parameters + implicit ones
     let i = fst arguments in
@@ -12,9 +23,8 @@ val increment  = fun arguments ->
     -- storage += i
     let storage = storage + i in
         operations, storage
-}
 
-sig decrement : nat * nat -> operation list * nat
+sig decrement : nat * storage -> operation list * storage
 val decrement = fun arguments ->
     -- Retrieve parameters + implicit ones
     let i = fst arguments in
@@ -26,7 +36,7 @@ val decrement = fun arguments ->
     let storage = storage - i in
         operations, storage
 
-sig reset : unit * nat -> operation list * nat
+sig reset : unit * storage -> operation list * storage
 val reset = fun arguments ->
     -- Retrieve parameters + implicit ones
     let _ = fst arguments in
