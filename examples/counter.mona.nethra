@@ -3,7 +3,7 @@ type entries = Nat.t | Nat.t | Unit.t
 type storage = Nat.t
 type context = List.t Transaction.t * storage
 
-sig main : entries * storage -> List.t Transaction.t
+sig main : entries * storage -> List.t Transaction.t * storage
 val main = fun arguments ->
     -- Retrieve parameters + implicit ones
     let entry = fst arguments in
