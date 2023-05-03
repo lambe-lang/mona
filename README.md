@@ -106,7 +106,41 @@ type_field ::=
 
 ## Examples
 
-TODO
+```js
+contract {
+    entries: deposit, transfer, withdraw
+    storage: ledger = [*:0] -- 0 should be the neutral currency value
+}
+
+type ledger = [address:currency]
+
+invariant {
+    -- Impossible to have the equality since origination can accept some currency for the balance
+    storage[*] <= Contract.balance
+}
+
+fun deposit() {
+    storage[Transaction.sender] += Transaction.amount
+}
+
+fun transfer(destination: address, amount: currency) {
+    requires {
+        storage[Transaction.sender] >= amount -- Too much transferred currency
+    }
+
+    storage[Transaction.sender] -= amount
+    storage[destination] += amount
+}
+
+fun withdraw(amount : currency) {
+    requires {
+        storage[Transaction.sender] >= amount -- Too much transferred currency
+    }
+
+    storage[Transaction.sender] -= amount
+    transfer amount to Transaction.sender
+}
+
 
 ## LICENSE
 
