@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8c65ff75-07b4-4f6b-b79a-3173f8a554b2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/increment.mona" beforeDir="false" afterPath="$PROJECT_DIR$/examples/counter.mona" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/increment.mona.ml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/counter.mona.ml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/counter.mona.ml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/counter.mona.ml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/multi-asset.mona.ml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/multi-asset.mona.ml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/single-asset.mona.ml" beforeDir="false" afterPath="$PROJECT_DIR$/examples/single-asset.mona.ml" afterDir="false" />
     </list>
@@ -69,7 +67,7 @@
       <workItem from="1676357312677" duration="2417000" />
       <workItem from="1682003771519" duration="1714000" />
       <workItem from="1682406763993" duration="20017000" />
-      <workItem from="1682670119485" duration="3709000" />
+      <workItem from="1682670119485" duration="7153000" />
     </task>
     <servers />
   </component>
