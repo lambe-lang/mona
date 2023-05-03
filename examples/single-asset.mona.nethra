@@ -1,0 +1,73 @@
+-{
+    -- Should be checked during the compilation (partial evaluation)
+    invariant {
+        storage[*] <= Contract.balance
+    }
+}-
+
+type ledger = map address currency
+
+type entries = Unit.t | Nat.t * (Address.t * Currency.t) | Nat.t * Currency.t
+type storage = ledger
+type context = List.t Transaction.t * storage
+
+sig main : entries * storage -> List.t Transaction.t * storage
+val main = fun arguments ->
+    -- Retrieve parameters + implicit ones
+    let entry = fst arguments in
+    let storage = snd arguments in
+    let operations = [] in
+    -- Decomposition
+    let context =
+        case entry
+            (fun p -> deposit (p, context))
+            (fun p ->
+                case p
+                    (fun p -> transfer (p, context))
+                    (fun p -> withdraw (p, context))
+            )
+    in
+    (fst context, snd context)
+
+sig deposit : Unit.t * context -> context
+val deposit = fun arguments ->
+    -- Retrieve parameters + implicit ones
+    let _ = fst arguments in
+    let operations = fst (snd arguments) in
+    let storage = snd (snd arguments) in
+    -- storage[Transaction.sender] += Transaction.amount
+    let storage_sender = Map.get storage Transaction.sender 0 in
+    let storage = Map.set storage Transaction.sender (storage_sender + Transaction.amount) in
+        operations, storage
+
+sig transfer : (Address.t * Currency.t) * context -> context
+val transfer = fun arguments ->
+    -- Retrieve parameters + implicit ones
+    let destination  = fst (fst arguments) in
+    let amount = snd (fst arguments) in
+    let operations = fst (snd arguments) in
+    let storage = snd (snd arguments) in
+    -- requires { storage[Transaction.sender] >= amount -- Too much transferred currency }
+    let assert (Map.get storage Transaction.sender 0 >= amount) "Too much transferred currency" in
+    -- storage[Transaction.sender] -= amount
+    let storage_sender = Map.get storage Transaction.sender 0 in
+    let storage = Map.set storage Transaction.sender (storage_sender - amount) in
+    -- storage[destination ] += amount
+    let storage_destination  = Map.get storage Transaction.sender 0 in
+    let storage = Map.set storage destination (storage_destination  + amount) in
+        operations, storage
+
+sig withdraw : Currency.t * context -> context
+val withdraw = fun arguments ->
+    -- Retrieve parameters + implicit ones
+    let amount = fst arguments in
+    let operations = fst (snd arguments) in
+    let storage = snd (snd arguments) in
+    -- requires { storage[Transaction.sender] >= amount -- Too much transferred currency }
+    let assert (Map.get storage Transaction.sender 0 >= amount) "Too much transferred currency" in
+    -- storage[Transaction.sender] -= amount
+    let storage_sender = Map.get storage Transaction.sender 0 in
+    let storage = Map.set storage Transaction.sender (storage_sender - amount) in
+    -- transfer amount to Transaction.sender
+    let operations = List.cons (Transaction.transfer amount Transaction.sender) operations in
+        operations, storage
