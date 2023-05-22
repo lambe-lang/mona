@@ -38,7 +38,7 @@ fun withdraw(amount : currency) {
     storage[Transaction.sender] -= amount
     transfer amount to Transaction.sender
 }
-
+```
 
 ## LICENSE
 
