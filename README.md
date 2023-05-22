@@ -4,6 +4,8 @@ Mona is a Smart-Contract centric language.
 
 # Examples
 
+## Single Asset Ledger
+
 ```js
 contract {
     entries: deposit, transfer, withdraw
