@@ -47,8 +47,8 @@ val transfer = fun arguments ->
     let amount = snd (fst arguments) in
     let operations = fst (snd arguments) in
     let storage = snd (snd arguments) in
-    -- requires { storage[Transaction.sender] >= amount -- Too much transferred currency }
-    let assert (Map.get storage Transaction.sender 0 >= amount) "Too much transferred currency" in
+    -- requires { storage[Transaction.sender] > amount -- Too much transferred currency }
+    let assert (Map.get storage Transaction.sender 0 > amount) "Too much transferred currency" in
     -- storage[Transaction.sender] -= amount
     let storage_sender = Map.get storage Transaction.sender 0 in
     let storage = Map.set storage Transaction.sender (storage_sender - amount) in
@@ -63,8 +63,8 @@ val withdraw = fun arguments ->
     let amount = fst arguments in
     let operations = fst (snd arguments) in
     let storage = snd (snd arguments) in
-    -- requires { storage[Transaction.sender] >= amount -- Too much transferred currency }
-    let assert (Map.get storage Transaction.sender 0 >= amount) "Too much transferred currency" in
+    -- requires { storage[Transaction.sender] > amount -- Too much transferred currency }
+    let assert (Map.get storage Transaction.sender 0 > amount) "Too much transferred currency" in
     -- storage[Transaction.sender] -= amount
     let storage_sender = Map.get storage Transaction.sender 0 in
     let storage = Map.set storage Transaction.sender (storage_sender - amount) in
