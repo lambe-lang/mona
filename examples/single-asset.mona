@@ -16,7 +16,7 @@ fun deposit() {
 
 fun transfer(destination: address, amount: currency) {
     requires {
-        storage[Transaction.sender] >= amount -- Too much transferred currency
+        storage[Transaction.sender] > amount -- Too much transferred currency
     }
 
     storage[Transaction.sender] -= amount
@@ -25,7 +25,7 @@ fun transfer(destination: address, amount: currency) {
 
 fun withdraw(amount : currency) {
     requires {
-        storage[Transaction.sender] >= amount -- Too much transferred currency
+        storage[Transaction.sender] > amount -- Too much transferred currency
     }
 
     storage[Transaction.sender] -= amount
